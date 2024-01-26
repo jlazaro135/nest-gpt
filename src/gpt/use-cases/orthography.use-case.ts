@@ -18,8 +18,11 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
             Te serán proveídos textos en español con posibles errores ortográficos y gramaticales,
             Las palabras usadas deben de existir en el diccionario de la Real Academia Española,
             Debes de responder en formato JSON, 
-            tu tarea es corregirlos y retornar información soluciones, 
+            tu tarea es corregirlos y retornar información con soluciones, 
             también debes de dar un porcentaje de acierto por el usuario,
+            la solución no puede ser igual a la solución,
+            ten en cuenta el contexto del texto como puntos o comas,
+            también pueden ser palabras sueltas
             
     
             Si no hay errores, debes de retornar un mensaje de felicitaciones.
@@ -29,8 +32,8 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
               userScore: number,
               errors: string[], // ['error -> solución']
               message: string, //  Usa emojis y texto para felicitar al usuario
+              correctedText: string, // devuelve el texto corregido con las palabras corregidas envueltas en la etiqueta HTML <b style='background-color: red;'></b>
             }
-            
             
             `
           },
@@ -41,7 +44,6 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
       ],
         model: "gpt-3.5-turbo-1106",
         temperature: 0.3,
-        max_tokens: 150,
         response_format: {
           type: 'json_object'
         }
