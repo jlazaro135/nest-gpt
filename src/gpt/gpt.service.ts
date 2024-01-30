@@ -2,8 +2,8 @@ import * as path from "path";
 import * as fs from "fs";
 
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { orthographyCheckUseCase, prosConsDiscusserStreamUseCase, prosConsDiscusserUseCase, textToAudioUseCase, translateUseCase } from './use-cases';
-import { OrthographyDto, ProsConsDiscusserDto, TextToAudioDto, TranslateDto } from './dtos';
+import { audioToTextUseCase, orthographyCheckUseCase, prosConsDiscusserStreamUseCase, prosConsDiscusserUseCase, textToAudioUseCase, translateUseCase } from './use-cases';
+import { AudioToTextDto, OrthographyDto, ProsConsDiscusserDto, TextToAudioDto, TranslateDto } from './dtos';
 
 import OpenAI from "openai";
 
@@ -64,5 +64,12 @@ export class GptService {
 
         return filePath;
 
+    }
+
+    async audioToText(audioFile: Express.Multer.File, audioToTextDto?: AudioToTextDto){
+        return await audioToTextUseCase(this.openai, {
+            audioFile, 
+            prompt: audioToTextDto.prompt
+        })
     }
 }
