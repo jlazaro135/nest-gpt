@@ -81,7 +81,7 @@ export class GptService {
 
     async imageGenerationGetter(fileName: string){
 
-        const filePath = path.resolve(__dirname, '../../generated/images', `${fileName}.png`);
+        const filePath = path.resolve(__dirname, '../../generated/images', `${fileName}`);
 
         const wasFound = fs.existsSync( filePath );
 
