@@ -3,7 +3,7 @@ import * as fs from "fs";
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { audioToTextUseCase, imageGenerationUseCase, imageVariationUseCase, orthographyCheckUseCase, prosConsDiscusserStreamUseCase, prosConsDiscusserUseCase, textToAudioUseCase, translateUseCase } from './use-cases';
-import { AudioToTextDto, ImageGenerationDto, ImageVariationDto, OrthographyDto, ProsConsDiscusserDto, TextToAudioDto, TranslateDto } from './dtos';
+import { AudioToTextDto, ImageGenerationDto, ImageVariationDto, OrthographyDto, TextToAudioDto, TranslateDto, messageThreadDto} from './dtos';
 
 import OpenAI from "openai";
 
@@ -24,14 +24,12 @@ export class GptService {
         
     }
 
-    async prosConsDiscusser({prompt}: ProsConsDiscusserDto){
-        return await prosConsDiscusserUseCase(this.openai, {
-            prompt
-        });
-        
+    async prosConsDiscusser(messageThreadsDto: OpenAI.Chat.ChatCompletionMessageParam[]){
+        return await prosConsDiscusserUseCase(this.openai, messageThreadsDto);
     }
+    
 
-    async prosConsDiscusserStream({prompt}: ProsConsDiscusserDto){
+    async prosConsDiscusserStream({prompt}: any){
         return await prosConsDiscusserStreamUseCase(this.openai, {
             prompt
         });

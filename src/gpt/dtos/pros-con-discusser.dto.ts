@@ -1,8 +1,7 @@
-import { IsString } from "class-validator";
+import OpenAI from 'openai';
+import { IsOptional, IsString } from 'class-validator';
 
-export class ProsConsDiscusserDto {
-
-    @IsString()
-    readonly prompt: string;
-
+export class messageThreadDto {
+  @IsString()
+  readonly messageThread: OpenAI.Chat.ChatCompletionMessageParam[];
 }
